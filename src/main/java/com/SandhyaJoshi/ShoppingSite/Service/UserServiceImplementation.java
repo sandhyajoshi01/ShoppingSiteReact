@@ -1,11 +1,8 @@
 package com.SandhyaJoshi.ShoppingSite.Service;
-
-
 import com.SandhyaJoshi.ShoppingSite.Model.User;
 import com.SandhyaJoshi.ShoppingSite.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 

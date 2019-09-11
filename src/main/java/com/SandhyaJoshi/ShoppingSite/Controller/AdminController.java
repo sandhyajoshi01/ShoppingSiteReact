@@ -1,6 +1,4 @@
 package com.SandhyaJoshi.ShoppingSite.Controller;
-
-
 import com.SandhyaJoshi.ShoppingSite.Model.Product;
 import com.SandhyaJoshi.ShoppingSite.Model.User;
 import com.SandhyaJoshi.ShoppingSite.Service.ProductService;
@@ -10,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = { "http://localhost:3000"})
 @RestController
 public class AdminController {
     @Autowired

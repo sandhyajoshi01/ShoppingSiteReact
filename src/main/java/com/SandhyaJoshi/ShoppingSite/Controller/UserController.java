@@ -1,20 +1,21 @@
 package com.SandhyaJoshi.ShoppingSite.Controller;
 
+import com.SandhyaJoshi.ShoppingSite.Model.BuyProducts;
 import com.SandhyaJoshi.ShoppingSite.Model.Role;
 import com.SandhyaJoshi.ShoppingSite.Model.User;
+import com.SandhyaJoshi.ShoppingSite.Service.BuyProductsService;
 import com.SandhyaJoshi.ShoppingSite.Service.ProductService;
 import com.SandhyaJoshi.ShoppingSite.Service.ShoppingCartService;
 import com.SandhyaJoshi.ShoppingSite.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 
+@CrossOrigin(origins = { "http://localhost:3000"})
 @RestController //this will convert whatever is returned into json format in response
 public class UserController {
 
@@ -27,8 +28,11 @@ public class UserController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
+    @Autowired
+    private BuyProductsService buyProductsService;
+
     //the API methods
-    @PostMapping("api/user/registration")
+    @PostMapping("api/user/signup")
     public ResponseEntity<?> RegisterUser(@RequestBody User user){
         if (userService.findUserByUsername(user.getUsername())!=null){  //if id not null already, send conflict
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -51,6 +55,12 @@ public class UserController {
         return new ResponseEntity<>(productService.ListProduct(), HttpStatus.OK);
     }
 
+    @PostMapping("/api/user/purchase")
+    public ResponseEntity<?> buyProducts(@RequestBody BuyProducts buyProducts){
+        buyProducts.setPurchaseDate(LocalDateTime.now());
+        buyProductsService.saveTransaction(buyProducts);
+        return new ResponseEntity<>(buyProducts, HttpStatus.CREATED);
+    }
 
 
 }
