@@ -1,21 +1,21 @@
 package com.SandhyaJoshi.ShoppingSite.Controller;
 
 import com.SandhyaJoshi.ShoppingSite.Model.BuyProducts;
+import com.SandhyaJoshi.ShoppingSite.Model.Order;
 import com.SandhyaJoshi.ShoppingSite.Model.Role;
 import com.SandhyaJoshi.ShoppingSite.Model.User;
-import com.SandhyaJoshi.ShoppingSite.Service.BuyProductsService;
-import com.SandhyaJoshi.ShoppingSite.Service.ProductService;
-import com.SandhyaJoshi.ShoppingSite.Service.ShoppingCartService;
-import com.SandhyaJoshi.ShoppingSite.Service.UserService;
+import com.SandhyaJoshi.ShoppingSite.Service.*;
+import com.SandhyaJoshi.ShoppingSite.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
 
-@CrossOrigin(origins = { "http://localhost:3000"})
+//@CrossOrigin(origins = { "http://localhost:3000"})
 @RestController //this will convert whatever is returned into json format in response
 public class UserController {
 
@@ -31,6 +31,12 @@ public class UserController {
     @Autowired
     private BuyProductsService buyProductsService;
 
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
     //the API methods
     @PostMapping("api/user/signup")
     public ResponseEntity<?> RegisterUser(@RequestBody User user){
@@ -38,16 +44,19 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         user.setRole(Role.CUSTOMER);
-        userService.saveUser(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
     @GetMapping("api/user/login")
     public ResponseEntity<?> getUser(Principal principal) {
-        if (principal == null || principal.getName() == null) {
+        if (principal == null) {
             return ResponseEntity.ok(principal);
         }
-        return new ResponseEntity<>(userService.findUserByUsername(principal.getName()), HttpStatus.OK);
+        UsernamePasswordAuthenticationToken authenticationToken =
+                (UsernamePasswordAuthenticationToken) principal;
+        User user = userService.findUserByUsername(authenticationToken.getName());
+        user.setToken(jwtTokenProvider.generateToken(authenticationToken));
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("api/user/products")
@@ -60,6 +69,13 @@ public class UserController {
         buyProducts.setPurchaseDate(LocalDateTime.now());
         buyProductsService.saveTransaction(buyProducts);
         return new ResponseEntity<>(buyProducts, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/api/user/saveorder")
+    public ResponseEntity<?> saveOrder(@RequestBody Order order){
+        order.setOrder_Date(LocalDateTime.now());
+        orderService.saveOrder(order);
+        return new ResponseEntity<>(order,HttpStatus.CREATED);
     }
 
 

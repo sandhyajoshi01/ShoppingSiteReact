@@ -29,6 +29,4 @@ public class ShoppingCartImplementation implements ShoppingCartService {
         shoppingCartRepository.deleteById(scartID);
     }
 
-
-
 }

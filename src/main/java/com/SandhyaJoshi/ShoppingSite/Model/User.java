@@ -26,4 +26,7 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name="role")
     private Role role;
+    //transient because it won't be stored in database
+    @Transient
+    private String token;
 }

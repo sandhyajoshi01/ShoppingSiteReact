@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "BuyProducts")
+@Table(name = "buy_products")
 public class BuyProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,10 @@ public class BuyProducts {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-    @Column(name = "purchase_date")
+    @Column(name = "Purchase_Date")
     private LocalDateTime purchaseDate;
+
+    @Column(name = "Total_Price")
+    private long totalPrice;
 
 }
