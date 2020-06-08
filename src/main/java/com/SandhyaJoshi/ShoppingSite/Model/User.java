@@ -23,6 +23,11 @@ public class User implements Serializable {
     private String username;
     @Column(name="password")
     private String password;
+    @Column(name="billing_address")
+    private String billingAddress;
+    @Column(name="ether_address")
+    private String etherAddress;
+
     @Enumerated(EnumType.STRING)
     @Column(name="role")
     private Role role;

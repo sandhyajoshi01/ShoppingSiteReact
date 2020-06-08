@@ -1,3 +1,4 @@
+/*
 package com.SandhyaJoshi.ShoppingSite.Service;
 
 import com.SandhyaJoshi.ShoppingSite.Model.ShoppingCart;
@@ -9,3 +10,4 @@ public interface ShoppingCartService {
 
     void deleteShoppingCart(int scartID);
 }
+*/

@@ -3,12 +3,13 @@ package com.SandhyaJoshi.ShoppingSite.Model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 @Table(name="order")
-public class Order {
+public class Order implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "OrderID")
@@ -24,6 +25,12 @@ public class Order {
 
     @Column(name = "Quantity")
     private int quantity;
+
+    @Column(name="Price")
+    private int price;
+
+    @Column(name="ProductTotalPrice")
+    private float productTotalPrice;
 
     @Column(name = "Order_Date")
     private LocalDateTime Order_Date;

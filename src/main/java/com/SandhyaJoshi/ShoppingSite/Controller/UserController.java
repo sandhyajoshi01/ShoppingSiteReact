@@ -26,9 +26,6 @@ public class UserController {
     private ProductService productService;
 
     @Autowired
-    private ShoppingCartService shoppingCartService;
-
-    @Autowired
     private BuyProductsService buyProductsService;
 
     @Autowired
@@ -66,7 +63,7 @@ public class UserController {
 
     @PostMapping("/api/user/purchase")
     public ResponseEntity<?> buyProducts(@RequestBody BuyProducts buyProducts){
-        buyProducts.setPurchaseDate(LocalDateTime.now());
+        //buyProducts.setPurchaseDate(LocalDateTime.now());
         buyProductsService.saveTransaction(buyProducts);
         return new ResponseEntity<>(buyProducts, HttpStatus.CREATED);
     }
@@ -77,6 +74,13 @@ public class UserController {
         orderService.saveOrder(order);
         return new ResponseEntity<>(order,HttpStatus.CREATED);
     }
+
+    //newly added 5-31-2020
+   /* @PostMapping("/api/user/purchase")
+    public ResponseEntity<?> saveTransaction(@RequestBody BuyProducts buyProducts Order order){
+        buyProductsService.saveTransaction(buyProducts);
+
+    }*/
 
 
 }
