@@ -12,20 +12,21 @@ import java.time.LocalDateTime;
 public class BuyProducts  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int trID;
+    @Column(name = "trid")
+    private int trid;
 
    /* @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Product_ID", referencedColumnName = "Product_ID")
     private Product product;*/
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn (name = "user_id",referencedColumnName = "user_id")  //you may not need referencedcolumnnane
     private User user;
 
-    @Column(name = "Purchase_Date")
-    private LocalDateTime purchaseDate;
+    @Column(name = "transaction_hash")
+    private String transactionHash;
 
-    @Column(name = "Total_Price")
+    /*@Column(name = "Total_Price")
     private long totalPrice;
 
     //newly added
@@ -36,6 +37,6 @@ public class BuyProducts  implements Serializable {
     private String billingAddress;
 
     @Column(name = "Ether_Address")
-    private String etherAddress;
+    private String etherAddress;*/
 
 }

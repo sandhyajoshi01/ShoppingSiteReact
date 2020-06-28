@@ -28,6 +28,19 @@ public class User implements Serializable {
     @Column(name="ether_address")
     private String etherAddress;
 
+    //added 06-08
+    @Column(name="allowed_companies")
+    private String allowedCompanies;
+    @Column(name="allowed_data")
+    private String allowedData;
+    @Column(name="allowed_purpose")
+    private String allowedPurpose;
+    @Column(name="allowed_reward")
+    private String allowedReward;
+    @Column(name="allowed_condition")
+    private String allowedCondition;
+
+
     @Enumerated(EnumType.STRING)
     @Column(name="role")
     private Role role;
