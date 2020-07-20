@@ -15,13 +15,20 @@ public class BuyProducts  implements Serializable {
     @Column(name = "trid")
     private int trid;
 
-   /* @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "Product_ID", referencedColumnName = "Product_ID")
-    private Product product;*/
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "user_id",referencedColumnName = "user_id")  //you may not need referencedcolumnnane
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "Product_ID", referencedColumnName = "Product_ID")
+    private Product product;
+
+    @Column(name = "Product_Quantity")
+        private int proQuantity;
+
+    @Column(name = "Total_Price_ETH")
+    private double totalPrice;
 
     @Column(name = "transaction_hash")
     private String transactionHash;
